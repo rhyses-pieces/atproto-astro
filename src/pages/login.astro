@@ -1,0 +1,26 @@
+---
+import { actions } from "astro:actions";
+
+const user = await Astro.session?.get("user");
+if (user) {
+  return Astro.redirect("/");
+}
+
+const result = Astro.getActionResult(actions.login);
+if (result && !result.error) {
+  return Astro.redirect("/");
+}
+---
+<form action={actions.login} method="post">
+  <label for="username">Username</label>
+  <input type="text" name="username" id="username" />
+
+  <label for="password">Password</label>
+  <input type="password" name="password" id="password" />
+
+  <button type="submit">Login</button>
+</form>
+
+<section>
+  {result?.error}
+</section>

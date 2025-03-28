@@ -1,0 +1,8 @@
+---
+const user = await Astro.session?.get("user");
+---
+<h1>Welcome back, {user.username}</h1>
+
+<pre>
+  {JSON.stringify(user)}
+</pre>
