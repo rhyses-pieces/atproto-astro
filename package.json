@@ -1,17 +1,31 @@
 {
   "name": "atproto-astro",
-  "type": "module",
   "version": "0.0.1",
+  "dependencies": {
+    "@astrojs/node": "^9.1.3",
+    "@atproto/api": "^0.14.16",
+    "@atproto/common": "^0.4.8",
+    "@atproto/identity": "^0.4.6",
+    "@atproto/lexicon": "^0.4.9",
+    "@atproto/oauth-client-node": "^0.2.13",
+    "@atproto/sync": "^0.1.18",
+    "@atproto/syntax": "^0.4.0",
+    "@atproto/xrpc-server": "^0.7.13",
+    "astro": "^5.5.5",
+    "kysely": "^0.27.6",
+    "mariadb": "^3.4.0",
+    "mysql2": "^3.14.0"
+  },
+  "devDependencies": {
+    "@atproto/lex-cli": "^0.7.1",
+    "@types/node": "^22.13.14"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lex": "lex gen-server ./src/lexicons ./lexicons/*"
   },
-  "dependencies": {
-    "@astrojs/node": "^9.1.3",
-    "astro": "^5.5.5",
-    "db0": "^0.3.1",
-    "mysql2": "^3.14.0"
-  }
+  "type": "module"
 }
