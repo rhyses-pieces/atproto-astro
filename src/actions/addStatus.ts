@@ -1,5 +1,8 @@
-import { ActionError, defineAction } from "astro:actions";
+import { ActionError, defineAction, type ActionAPIContext } from "astro:actions";
 import { z } from "astro:schema";
+import { TID } from "@atproto/common";
+import { db } from "@/lib/db";
+import { getAgent } from "@/lib/auth/client";
 
 export default defineAction({
   accept: "form",
@@ -8,14 +11,69 @@ export default defineAction({
     status: z.string(),
   }),
   handler: async (input, context) => {
-    if (!context.session?.has("user")) {
+    const session = context.locals.session;
+    if (!session) {
       throw new ActionError({
         code: "UNAUTHORIZED",
-        message: "User should be logged in!",
+        message: "No session found!",
       });
-    } 
-    // find user from db
-    // insert status into the db
-    // return results
+    }
+
+    const did = context.locals.session.userDid;
+    if (!did) {
+      throw new ActionError({
+        code: "UNAUTHORIZED",
+        message: "No identifier found for user.",
+      });
+    }
+
+    const agent = await getAgent({ did });
+    if (!agent?.did) {
+      throw new ActionError({
+        code: "UNAUTHORIZED",
+        message: "Your login expired, try logging in again",
+      });
+    }
+
+    const rkey = TID.nextStr();
+    const record = {
+      $type: "city.fruity.status",
+      status: input,
+      createdAt: new Date().toISOString(),
+    };
+    
+    // TODO: validate record with lexicon
+
+    let uri: string | undefined;
+    try {
+      const response = await agent.com.atproto.repo.putRecord({
+        repo: agent.assertDid,
+        collection: "city.fruity.status",
+        rkey,
+        record,
+        validate: false,
+      });
+      uri = response.data.uri;
+    } catch (error) {
+      console.error(error, "Failed to write record...");
+      throw new ActionError({
+        code: "BAD_REQUEST",
+        message: "Something went wrong with posting the status",
+      });
+    }
+
+    try {
+      await db.insertInto("status")
+      .values({
+        uri,
+        authorDid: agent.assertDid,
+        status: input.emoji + " " + input.status,
+        createdAt: record.createdAt,
+        indexedAt: new Date().toISOString(),
+      })
+      .execute();
+    } catch (error) {
+      console.warn(error, "failed to update, but this should be caught by firehose");
+    }
   },
 });

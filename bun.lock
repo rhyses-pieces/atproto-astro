@@ -8,6 +8,7 @@
         "@atproto/api": "^0.14.16",
         "@atproto/common": "^0.4.8",
         "@atproto/identity": "^0.4.6",
+        "@atproto/jwk-jose": "^0.1.5",
         "@atproto/lexicon": "^0.4.9",
         "@atproto/oauth-client-node": "^0.2.13",
         "@atproto/sync": "^0.1.18",

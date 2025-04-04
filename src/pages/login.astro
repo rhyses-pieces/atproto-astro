@@ -1,11 +1,6 @@
 ---
 import { actions } from "astro:actions";
 
-const user = await Astro.session?.get("user");
-if (user) {
-  return Astro.redirect("/");
-}
-
 const result = Astro.getActionResult(actions.login);
 if (result && !result.error) {
   return Astro.redirect("/");

@@ -1,0 +1,20 @@
+{
+  "lexicon": 1,
+  "id": "city.fruity.profile",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A user profile on fruity city, maybe custom css?",
+      "key": "literal:self",
+      "record": {
+        "type": "object",
+        "properties": {
+          "customCss": {
+            "type": "string",
+            "description": "Write your own style!"
+          }
+        }
+      }
+    }
+  }
+}

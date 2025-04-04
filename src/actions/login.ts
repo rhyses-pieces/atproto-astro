@@ -4,8 +4,7 @@ import { z } from "astro:schema";
 export default defineAction({
   accept: "form",
   input: z.object({
-    username: z.string(),
-    password: z.string(),
+    handle: z.string(),
   }),
   handler: async (input, context) => {
     const sessionExists = await context.session?.has("user");
@@ -15,8 +14,7 @@ export default defineAction({
       return user;
     } else {
       const user = {
-        username: input.username,
-        password: input.password,
+        handle: input.handle,
       };
       // check if user exists in database
       // log in the user to the database

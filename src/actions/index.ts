@@ -1,13 +1,9 @@
-import { defineAction } from "astro:actions";
 import login from "./login";
+import logout from "./logout";
 import addStatus from "./addStatus";
 
 export const server = {
   login: login,
-  logout: defineAction({
-    handler(context) {
-      return context.session?.destroy();
-    },
-  }),
+  logout: logout,
   status: addStatus,
 }
