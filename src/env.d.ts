@@ -3,10 +3,14 @@ declare namespace App {
     user: {
       id: string;
       handle: string;
-    },
+    } | null,
     session: {
-      sid: string;
-      userDid: string;
-    },
+      id: string;
+      user_did: string;
+      expires_at: Date | string;
+    } | null,
+  }
+  interface SessionData {
+    user_did: string;
   }
 }

@@ -9,13 +9,13 @@
         "type": "object",
         "required": ["status", "createdAt"],
         "properties": {
-          "status": {
+          "content": {
             "type": "string",
             "minLength": 1,
             "maxGraphemes": 4,
             "maxLength": 255
           },
-          "createdAt": {
+          "created_at": {
             "type": "string",
             "format": "datetime"
           }

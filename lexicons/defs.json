@@ -16,7 +16,7 @@
           "maxGraphemes": 1,
           "maxLength": 255
         },
-        "createdAt": {
+        "created_at": {
           "type": "string",
           "format": "datetime"
         },

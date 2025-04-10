@@ -9,10 +9,28 @@
       "record": {
         "type": "object",
         "properties": {
-          "customCss": {
+          "nickname": {
             "type": "string",
-            "description": "Write your own style!"
-          }
+            "maxGraphemes": 32,
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "description": "Free-form profile description text.",
+            "maxGraphemes": 256,
+            "maxLength": 2560
+          },
+          "avatar": {
+            "type": "blob",
+            "description": "Small image to be displayed next to posts from account. AKA, 'profile picture'",
+            "accept": ["image/png", "image/jpeg"],
+            "maxSize": 1000000
+          },
+          "homepage": {
+            "type": "string",
+            "description": "optional, you can share your personal website or social page here!"
+          },
+          "created_at": { "type": "string", "format": "datetime" }
         }
       }
     }
