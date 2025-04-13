@@ -5,7 +5,7 @@ import type { Database } from "../db/types";
 export class StateStore implements NodeSavedStateStore {
   constructor(private db: Kysely<Database>) {};
   async get(key: string): Promise<NodeSavedState | undefined> {
-    const result = await this.db.selectFrom("auth_state").selectAll().where("key", "=", key).executeTakeFirst();
+    const result = await this.db.selectFrom("auth_state").selectAll().where("state_key", "=", key).executeTakeFirst();
     if (!result) return;
     return result.state;
   };
@@ -13,19 +13,19 @@ export class StateStore implements NodeSavedStateStore {
     const state = JSON.stringify(value);
     await this.db
       .insertInto("auth_state")
-      .values({ key, state })
-      .onConflict(conflict => conflict.doUpdateSet({ state }))
+      .values({ state_key: key, state })
+      .onDuplicateKeyUpdate({ state })
       .execute();
   };
   async del(key: string) {
-    await this.db.deleteFrom("auth_state").where("key", "=", key).execute();
+    await this.db.deleteFrom("auth_state").where("state_key", "=", key).execute();
   };
 }
 
 export class SessionStore implements NodeSavedSessionStore {
   constructor(private db: Kysely<Database>) {};
   async get(key: string): Promise<NodeSavedSession | undefined> {
-    const result = await this.db.selectFrom("auth_session").selectAll().where("key", "=", key).executeTakeFirst();
+    const result = await this.db.selectFrom("auth_session").selectAll().where("session_key", "=", key).executeTakeFirst();
     if (!result) return;
     return result.session;
   };
@@ -33,11 +33,11 @@ export class SessionStore implements NodeSavedSessionStore {
     const session = JSON.stringify(value);
     await this.db
       .insertInto("auth_session")
-      .values({ key, session })
-      .onConflict(conflict => conflict.doUpdateSet({ session }))
+      .values({ session_key: key, session })
+      .onDuplicateKeyUpdate({ session })
       .execute();
   };
   async del(key: string) {
-    await this.db.deleteFrom("auth_session").where("key", "=", key).execute();
+    await this.db.deleteFrom("auth_session").where("session_key", "=", key).execute();
   };
 }

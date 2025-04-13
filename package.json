@@ -16,12 +16,12 @@
     "@oslojs/encoding": "^1.1.0",
     "astro": "5.6.1",
     "kysely": "^0.27.6",
-    "mariadb": "^3.4.0",
     "mysql2": "^3.14.0"
   },
   "devDependencies": {
     "@atproto/lex-cli": "^0.7.1",
-    "@types/node": "^22.13.14"
+    "@types/node": "^22.13.14",
+    "cross-env": "^7.0.3"
   },
   "scripts": {
     "dev": "astro dev",
@@ -29,7 +29,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "lex": "lex gen-server ./src/lexicons ./lexicons/*",
-    "migrate": "bun ./src/lib/db/migrate.ts"
+    "migrate:dev": "cross-env NODE_ENV=development npx tsx ./src/lib/db/migrate.ts",
+    "migrate:prod": "cross-env NODE_ENV=production npx tsx ./src/lib/db/migrate.ts"
   },
   "type": "module"
 }

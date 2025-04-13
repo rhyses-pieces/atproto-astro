@@ -1,5 +1,5 @@
 import type { Database } from "./types";
-import { createPool } from "mariadb";
+import { createPool } from "mysql2";
 import { Kysely, MysqlDialect } from "kysely";
 
 const dialect = new MysqlDialect({

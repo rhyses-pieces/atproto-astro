@@ -9,7 +9,7 @@ import { SessionStore, StateStore } from "./storage";
 
 const SCOPES = "atproto transition:generic";
 const REDIRECT_PATH = "/oauth/callback";
-const IS_DEV = process.env.NODE_ENV == "development";
+const IS_DEV = import.meta.env.DEV;
 const url = IS_DEV ? `http://127.0.0.1:${PORT}` : PUBLIC_URL;
 
 const LOCAL_SEARCH_PARAMS = new URLSearchParams({

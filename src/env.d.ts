@@ -1,14 +1,7 @@
 declare namespace App {
   interface Locals {
-    user: {
-      id: string;
-      handle: string;
-    } | null,
-    session: {
-      id: string;
-      user_did: string;
-      expires_at: Date | string;
-    } | null,
+    user: import("@/lib/db/types").User | null,
+    session: import("@/lib/db/types").Session | null,
   }
   interface SessionData {
     user_did: string;

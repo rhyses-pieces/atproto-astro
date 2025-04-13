@@ -7,9 +7,9 @@ export interface UserTable {
   active: ColumnType<boolean | undefined>;
   nickname: string | null;
   description: string | null;
-  avatar: Blob | null;
+  // avatar: Blob | null; // how do???
   homepage: string | null;
-  css: string | null;
+  // style: string | null;
   created_at: ColumnType<Date, string | undefined, never>;
 }
 
@@ -20,7 +20,7 @@ export type UpdateUser = Updateable<UserTable>;
 export interface StatusTable {
   uri: Generated<string>;
   author_did: string;
-  status: string;
+  content: string;
   created_at: ColumnType<Date, string | undefined, never>;
   indexed_at: ColumnType<Date, string>;
 }
@@ -40,7 +40,7 @@ export type NewSession = Insertable<SessionTable>;
 export type UpdateSession = Updateable<SessionTable>;
 
 export interface AtProtoSessionTable {
-  key: Generated<string>;
+  session_key: Generated<string>;
   session: JSONColumnType<NodeSavedSession>;
 }
 
@@ -49,7 +49,7 @@ export type NewAtProtoSession = Insertable<AtProtoSessionTable>;
 export type UpdateAtProtoSession = Updateable<AtProtoSessionTable>;
 
 export interface AtProtoStateTable {
-  key: Generated<string>;
+  state_key: Generated<string>;
   state: JSONColumnType<NodeSavedState>;
 }
 
