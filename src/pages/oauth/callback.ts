@@ -9,9 +9,7 @@ export const GET: APIRoute = async ({ request, cookies }) => {
   const agent = new Agent(oauthSession);
 
   const token = generateSessionToken();
-  console.log("token is set: " + token);
-  console.log("assert the did: " + agent.assertDid);
-  const session = await createSession(token, agent.did!);
+  const session = await createSession(token, agent.assertDid);
   cookies.set("session", token, {
     httpOnly: true,
     sameSite: "lax",
@@ -20,5 +18,10 @@ export const GET: APIRoute = async ({ request, cookies }) => {
     path: "/",
   });
 
-  return new Response("test!!!");
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: "/",
+    },
+  });
 }

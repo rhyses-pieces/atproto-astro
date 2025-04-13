@@ -28,7 +28,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lex": "lex gen-server ./src/lexicons ./lexicons/*",
+    "lex": "lex gen-server ./src/lib/lexicons ./lexicons/*",
     "migrate:dev": "cross-env NODE_ENV=development npx tsx ./src/lib/db/migrate.ts",
     "migrate:prod": "cross-env NODE_ENV=production npx tsx ./src/lib/db/migrate.ts"
   },

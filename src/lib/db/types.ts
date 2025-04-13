@@ -2,6 +2,7 @@ import type { NodeSavedSession, NodeSavedState } from "@atproto/oauth-client-nod
 import type { ColumnType, Generated, Insertable, JSONColumnType, Selectable, Updateable } from "kysely";
 
 export interface UserTable {
+  id: Generated<number>;
   did: ColumnType<string, string, never>;
   handle: string;
   active: ColumnType<boolean | undefined>;
@@ -18,11 +19,12 @@ export type NewUser = Insertable<UserTable>;
 export type UpdateUser = Updateable<UserTable>;
 
 export interface StatusTable {
-  uri: Generated<string>;
+  id: Generated<number>;
+  uri: string;
   author_did: string;
   content: string;
   created_at: ColumnType<Date, string | undefined, never>;
-  indexed_at: ColumnType<Date, string>;
+  indexed_at: ColumnType<Date, string, string>;
 }
 
 export type Status = Selectable<StatusTable>;

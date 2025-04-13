@@ -1,0 +1,2 @@
+ALTER TABLE user ADD style VARCHAR(500);
+ALTER TABLE user ADD avatar VARCHAR(255);

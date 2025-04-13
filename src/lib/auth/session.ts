@@ -11,7 +11,10 @@ async function getSession(token: string): Promise<Session> {
   const result = await db.selectFrom("session")
     .selectAll()
     .where("id", "=", token)
-    .executeTakeFirstOrThrow();
+    .executeTakeFirstOrThrow(error => {
+      console.error(error);
+      throw new Error("Couldn't find session with that token!");
+    });
   return result;
 }
 
@@ -29,11 +32,11 @@ export async function createSession(token: string, userDid: string): Promise<Ses
     user_did: userDid,
     expires_at: new Date(Date.now() + DAYS_IN_MS * SESSION_DURATION_DAYS).toISOString(),
   };
-  const result = await db.insertInto("session").values(session).returning("id").executeTakeFirst();
-  if (!result) {
-    throw new Error("No ID found for session!");
-  }
-  return await getSession(result.id);
+  await db.insertInto("session").values(session).executeTakeFirstOrThrow(error => {
+    console.error(error);
+    throw new Error("Couldn't create session!");
+  });
+  return await getSession(sessionId);
 }
 
 export async function validateSessionToken(token: string): Promise<SessionValidationResult> {
@@ -55,7 +58,10 @@ export async function validateSessionToken(token: string): Promise<SessionValida
 }
 
 export async function invalidateSession(sessionId: string): Promise<void> {
-  await db.deleteFrom("session").where("id", "=", sessionId).executeTakeFirstOrThrow();
+  await db.deleteFrom("session").where("id", "=", sessionId).executeTakeFirstOrThrow(error => {
+    console.error(error);
+    throw new Error("Couldn't delete session with that token!");
+  });
 }
 
 export async function invalidateAllSessions(userDid: string): Promise<void> {

@@ -4,7 +4,7 @@
   "defs": {
     "statusView": {
       "type": "object",
-      "required": ["uri", "status", "profile", "createdAt"],
+      "required": ["uri", "status", "profile", "created_at"],
       "properties": {
         "uri": {
           "type": "string",
