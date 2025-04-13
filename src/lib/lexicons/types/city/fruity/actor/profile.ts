@@ -3,20 +3,22 @@
  */
 import { type ValidationResult, BlobRef } from '@atproto/lexicon'
 import { CID } from 'multiformats/cid'
-import { validate as _validate } from '../../../lexicons'
-import { type $Typed, is$typed as _is$typed, type OmitKey } from '../../../util'
+import { validate as _validate } from '../../../../lexicons'
+import {
+  type $Typed,
+  is$typed as _is$typed,
+  type OmitKey,
+} from '../../../../util'
 
 const is$typed = _is$typed,
   validate = _validate
-const id = 'city.fruity.profile'
+const id = 'city.fruity.actor.profile'
 
 export interface Record {
-  $type: 'city.fruity.profile'
+  $type: 'city.fruity.actor.profile'
   nickname?: string
   /** Free-form profile description text. */
   description?: string
-  /** Small image to be displayed next to posts from account. AKA, 'profile picture' */
-  avatar?: string
   /** optional, you can share your personal website or social page here! */
   homepage?: string
   created_at?: string

@@ -54,9 +54,9 @@ export const schemaDict = {
       },
     },
   },
-  CityFruityProfile: {
+  CityFruityActorProfile: {
     lexicon: 1,
-    id: 'city.fruity.profile',
+    id: 'city.fruity.actor.profile',
     defs: {
       main: {
         type: 'record',
@@ -75,11 +75,6 @@ export const schemaDict = {
               description: 'Free-form profile description text.',
               maxGraphemes: 256,
               maxLength: 500,
-            },
-            avatar: {
-              type: 'string',
-              description:
-                "Small image to be displayed next to posts from account. AKA, 'profile picture'",
             },
             homepage: {
               type: 'string',
@@ -110,7 +105,7 @@ export const schemaDict = {
               type: 'string',
               minLength: 1,
               maxGraphemes: 4,
-              maxLength: 255,
+              maxLength: 500,
             },
             created_at: {
               type: 'string',
@@ -176,7 +171,7 @@ export function validate(
 
 export const ids = {
   CityFruityDefs: 'city.fruity.defs',
-  CityFruityProfile: 'city.fruity.profile',
+  CityFruityActorProfile: 'city.fruity.actor.profile',
   CityFruityStatus: 'city.fruity.status',
   ComAtprotoRepoStrongRef: 'com.atproto.repo.strongRef',
 } as const

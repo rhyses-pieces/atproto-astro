@@ -38,6 +38,16 @@ export class CityNS {
 
 export class CityFruityNS {
   _server: Server
+  actor: CityFruityActorNS
+
+  constructor(server: Server) {
+    this._server = server
+    this.actor = new CityFruityActorNS(server)
+  }
+}
+
+export class CityFruityActorNS {
+  _server: Server
 
   constructor(server: Server) {
     this._server = server

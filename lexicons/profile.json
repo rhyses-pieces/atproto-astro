@@ -1,6 +1,6 @@
 {
   "lexicon": 1,
-  "id": "city.fruity.profile",
+  "id": "city.fruity.actor.profile",
   "defs": {
     "main": {
       "type": "record",
@@ -19,10 +19,6 @@
             "description": "Free-form profile description text.",
             "maxGraphemes": 256,
             "maxLength": 500
-          },
-          "avatar": {
-            "type": "string",
-            "description": "Small image to be displayed next to posts from account. AKA, 'profile picture'"
           },
           "homepage": {
             "type": "string",
