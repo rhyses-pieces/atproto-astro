@@ -13,13 +13,13 @@ export async function getStatus(uri: string): Promise<Status> {
   return result;
 }
 
-export async function addStatus(status: Status) {
+export async function addStatus(status: NewStatus): Promise<Status> {
   // validate the content here
   const newStatus: NewStatus = {
     uri: status.uri,
     author_did: status.author_did,
     content: status.content,
-    created_at: status.created_at.toISOString(),
+    created_at: status.created_at,
     indexed_at: new Date().toISOString(),
   };
 
@@ -30,7 +30,7 @@ export async function addStatus(status: Status) {
   return await getStatus(status.uri);
 }
 
-export async function updateStatus(status: Status) {
+export async function updateStatus(status: Status): Promise<Status> {
   // validate content here
   const updatedStatus: UpdateStatus = {
     content: status.content,
@@ -49,9 +49,6 @@ export async function updateStatus(status: Status) {
   return await getStatus(status.uri);
 }
 
-export async function deleteStatus(uri: string) {
-  await db.deleteFrom("status").where("uri", "=", uri).executeTakeFirstOrThrow(error => {
-    console.error(error);
-    throw new Error("Couldn't delete status!");
-  });
+export async function deleteStatus(uri: string): Promise<void> {
+  await db.deleteFrom("status").where("uri", "=", uri).execute();
 }

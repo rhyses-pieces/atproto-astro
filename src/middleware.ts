@@ -14,6 +14,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     context.cookies.delete("session");
     return next();
   }
+  
   try {
     await client.restore(session.user_did);
   } catch (error) {

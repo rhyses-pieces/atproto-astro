@@ -13,7 +13,8 @@ export async function getUser(did: string): Promise<User> {
   return result;
 }
 
-export async function addUser(did: string, handle: string, nickname?: string) {
+export async function addUser(did: string, handle: string, nickname?: string): Promise<User> {
+  // validate nickname here
   const user: NewUser = {
     did,
     handle,
@@ -29,7 +30,8 @@ export async function addUser(did: string, handle: string, nickname?: string) {
   return await getUser(user.did);
 }
 
-export async function updateUser(did: string, user: UpdateUser) {
+export async function updateUser(did: string, user: UpdateUser): Promise<User> {
+  // validate nickname, description, and homepage here
   await db
     .updateTable("user")
     .where("did", "=", did)
@@ -38,14 +40,10 @@ export async function updateUser(did: string, user: UpdateUser) {
     .executeTakeFirstOrThrow(error => {
       console.error(error);
       throw new Error("Couldn't update user!");
-    });
-  
+    });  
   return await getUser(did);
 }
 
-export async function deleteUser(did: string) {
-  await db.deleteFrom("user").where("did", "=", did).executeTakeFirstOrThrow(error => {
-    console.error(error);
-    throw new Error("Couldn't delete user!");
-  });
+export async function deleteUser(did: string): Promise<void> {
+  await db.deleteFrom("user").where("did", "=", did).execute();
 }
